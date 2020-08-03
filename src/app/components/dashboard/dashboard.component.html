@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="row">
+    <div class="column">
+      <nav class="navbar fixed-top navbar-dark bg-primary">
+        <a class="navbar-brand" href="#">
+          <span  *ngIf="keycloakAuth.authenticated">Bonjour {{ displayUserInfo() }}</span>
+        </a>
+        <button class="btn btn-outline-warning my-2 my-sm-0" (click)="logout()">Logout</button>
+        <button class="btn btn-outline-warning my-2 my-sm-0" (click)="login()">Login</button>
+      </nav>
+      <div class="jumbotron">
+        <h1 class="display-4">Hello, world!</h1>
+        <p class="lead">Securisez vos APIs Spring avec Keycloak : #4 – Utilisation du connecteur Keycloak.js avec Angular 4+.</p>
+        <hr class="my-4">
+        <p>Récupération de la donnée du endpoint non sécurisé</p>
+        <div class="lead">
+          <a class="btn btn-primary btn-lg" (click)="getUnsecuredData()" role="button">Data non sécurisé</a>
+          <div class="card" *ngIf="unsecuredLoaded">
+            <div class="card-body">
+              <h5 class="card-title">Response</h5>
+              <p class="card-text" *ngIf="!unsecuredError">{{ unsecureData }}</p>
+              <p class="card-text" *ngIf="unsecuredError">Code retour: {{ unsecuredErrorResponse.status }} - message: {{ unsecuredErrorResponse.message }}</p>
+            </div>
+          </div>
+        </div>
+        <hr class="my-4">
+        <p>Récupération de la donnée du endpoint admin sécurisé</p>
+        <div class="lead">
+          <a class="btn btn-primary btn-lg" (click)="getAdminData()" role="button">Data Admin</a>
+          <div class="card" *ngIf="adminLoaded">
+            <div class="card-body">
+              <h5 class="card-title">Response</h5>
+              <p class="card-text" *ngIf="!adminError">{{ adminData }}</p>
+              <p class="card-text" *ngIf="adminError">Code retour: {{ adminErrorResponse.status }} - message: {{ adminErrorResponse.message }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
