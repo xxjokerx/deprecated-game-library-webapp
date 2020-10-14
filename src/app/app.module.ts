@@ -11,6 +11,7 @@ import {HeaderComponent} from './components/header/header.component';
 import {AppRoutingModule} from './app-routing.module';
 import {ThemeCountComponent} from './components/theme/theme-count/theme-count.component';
 import {HomeComponent} from './components/home/home.component';
+import { ThemeListComponent } from './components/theme/theme-list/theme-list.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import {HomeComponent} from './components/home/home.component';
     DashboardComponent,
     HeaderComponent,
     ThemeCountComponent,
-    HomeComponent
+    HomeComponent,
+    ThemeListComponent
   ],
   imports: [
     BrowserModule,

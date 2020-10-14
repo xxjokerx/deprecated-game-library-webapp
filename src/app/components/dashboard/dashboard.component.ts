@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {KeycloakInstance} from 'keycloak-js';
 import {DataService} from '../../services/data/data.service';
 import {KeycloakService} from '../../services/keycloak/keycloak.service';
+import {Theme} from '../../model/theme.model';
+import {PagedTheme} from '../../model/paged.theme.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,6 +15,9 @@ export class DashboardComponent implements OnInit {
   public unsecureData: string;
   public userData: string;
   public adminData: string;
+  public theme: Theme;
+  public themes: Theme[];
+  public pagedTheme: PagedTheme;
 
   public unsecuredError: boolean;
   public adminError: boolean;
@@ -66,6 +71,25 @@ export class DashboardComponent implements OnInit {
     );
   }
 
+  getAdminThemeList() {
+    this.data.getAdminThemeList().subscribe(
+      data => {
+        this.adminLoaded = true;
+        this.pagedTheme = data;
+      },
+      error => {
+        console.log(error.error);
+        this.adminLoaded = true;
+        this.adminError = true;
+        this.adminErrorResponse = {
+          status: error.status,
+          message: error.message && this.isJsonString(error.error) ? JSON.parse(error.error).message : error.message
+        };
+      }
+    );
+    this.themes = this.pagedTheme.content;
+  }
+
   ngOnInit(): void {
     this.keycloakAuth = this.keycloak.getKeycloakAuth();
   }
@@ -91,5 +115,5 @@ export class DashboardComponent implements OnInit {
       return false;
     }
     return true;
-  }
+  };
 }
