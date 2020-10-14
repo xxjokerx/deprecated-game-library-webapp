@@ -3,7 +3,7 @@
     <div class="column">
       <nav class="navbar fixed-top navbar-dark bg-primary">
         <a class="navbar-brand" href="#">
-          <span *ngIf="keycloakAuth.authenticated">Bonjour {{ displayUserInfo() }}</span>
+          <span *ngIf="keycloakAuth && keycloakAuth.authenticated">Bonjour {{ displayUserInfo() }}</span>
         </a>
         <button class="btn btn-outline-warning my-2 my-sm-0" (click)="logout()">Logout</button>
         <button class="btn btn-outline-warning my-2 my-sm-0" (click)="login()">Login</button>
@@ -43,8 +43,8 @@
         <hr class="my-4">
         <p>Récupération de la liste des thèmes (endpoint admin sécurisé)</p>
         <div class="lead">
-          <a class="btn btn-primary btn-lg" (click)="getAdminThemeList()" role="button">Themes Admin</a>
-          <ul class="list-group">
+          <a class="btn btn-primary btn-lg" (click)="fetchThemePagedList()" role="button">Themes Admin</a>
+          <ul class="list-group" *ngIf="themeLoaded">
             <li class="list-group-item"
                 *ngFor="let theme of themes">
               {{theme.name}} (id:{{theme.id}})

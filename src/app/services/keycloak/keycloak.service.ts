@@ -27,13 +27,13 @@ export class KeycloakService {
     KeycloakService.auth.loggedIn = false;
     return new Promise((resolve, reject) => {
       keycloakAuth.init({onLoad: 'check-sso', checkLoginIframe: false})
-        .success(() => {
+        .then(() => {
           KeycloakService.auth.loggedIn = false;
           KeycloakService.auth.authz = keycloakAuth;
           console.log(KeycloakService.auth.authz.tokenParsed);
           resolve();
         })
-        .error(() => {
+        .catch(() => {
           reject();
         });
     });
@@ -44,10 +44,10 @@ export class KeycloakService {
       if (KeycloakService.auth.authz.token) {
         KeycloakService.auth.authz
           .updateToken(5)
-          .success(() => {
-            resolve(<string> KeycloakService.auth.authz.token);
+          .then(() => {
+            resolve((KeycloakService.auth.authz.token as string));
           })
-          .error(() => {
+          .catch(() => {
             reject('Failed to refresh token');
           });
       } else {

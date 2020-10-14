@@ -3,7 +3,8 @@ import {KeycloakInstance} from 'keycloak-js';
 import {DataService} from '../../services/data/data.service';
 import {KeycloakService} from '../../services/keycloak/keycloak.service';
 import {Theme} from '../../model/theme.model';
-import {PagedTheme} from '../../model/paged.theme.model';
+import {PagedThemes} from '../../model/paged.themes.model';
+import {ThemeService} from '../theme/theme.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,21 +18,24 @@ export class DashboardComponent implements OnInit {
   public adminData: string;
   public theme: Theme;
   public themes: Theme[];
-  public pagedTheme: PagedTheme;
+  public pagedTheme: PagedThemes;
 
   public unsecuredError: boolean;
   public adminError: boolean;
 
   public unsecuredLoaded: boolean;
   public adminLoaded: boolean;
+  public themeLoaded: boolean;
 
   public unsecuredErrorResponse: any;
   public adminErrorResponse: any;
 
   public keycloakAuth: KeycloakInstance;
 
+
   constructor(private data: DataService,
-              private keycloak: KeycloakService) {
+              private keycloak: KeycloakService,
+              private themeService: ThemeService) {
   }
 
   getUnsecuredData() {
@@ -71,15 +75,13 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  getAdminThemeList() {
-    this.data.getAdminThemeList().subscribe(
-      data => {
-        this.adminLoaded = true;
-        this.pagedTheme = data;
+  fetchThemePagedList() {
+    this.data.fetchThemePagedList().subscribe(
+      () => {
+        this.themeLoaded = true;
       },
       error => {
-        console.log(error.error);
-        this.adminLoaded = true;
+        this.themeLoaded = true;
         this.adminError = true;
         this.adminErrorResponse = {
           status: error.status,
@@ -87,7 +89,7 @@ export class DashboardComponent implements OnInit {
         };
       }
     );
-    this.themes = this.pagedTheme.content;
+    this.themes = this.themeService.getPagedTheme().content;
   }
 
   ngOnInit(): void {

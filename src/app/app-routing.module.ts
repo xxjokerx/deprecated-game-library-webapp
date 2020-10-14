@@ -1,9 +1,14 @@
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
-import {ThemeCountComponent} from './components/theme/theme-count/theme-count.component';
+import {DashboardComponent} from './components/dashboard/dashboard.component';
+import {ThemeResolverService} from './components/theme/theme-resolver.service';
 
 const appRoutes: Routes = [
-  {path: 'themes', component: ThemeCountComponent}
+  {
+    path: '',
+    component: DashboardComponent,
+    resolve: [ThemeResolverService]
+  }
 ];
 
 @NgModule({

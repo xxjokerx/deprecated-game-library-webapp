@@ -1,6 +1,6 @@
 import {Theme} from './theme.model';
 
-export class PagedTheme {
+export class PagedThemes {
   content: Theme[];
   totalPages: number;
   totalElements: number;
