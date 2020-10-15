@@ -1,6 +1,6 @@
 # Deprecated
 It was my first attempt to build a client to consume this [backend](https://github.com/xxjokerx/game-library-service) while getting auth by a Keycloak service. 
-Approaches i used relied on this [particular guide](https://blog.ineat-group.com/2018/08/securisez-vos-apis-spring-avec-keycloak-4-utilisation-du-connecteur-keycloak-js-avec-angular-6/) led to many errors in console. I finally decided to use [this library](https://github.com/mauriciovigolo/keycloak-angular).
+Approaches i used led to many errors in console. I finally decided to use [this library](https://github.com/mauriciovigolo/keycloak-angular).
 
 # GameLibraryClient
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.7.
