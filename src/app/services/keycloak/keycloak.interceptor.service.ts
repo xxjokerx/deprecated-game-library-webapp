@@ -12,10 +12,10 @@ export class KeycloakInterceptorService implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    if (this.keycloakService.isLoggedIn()) {
-      return this.getUserToken().pipe(
-        take(1),
-        mergeMap((token) => {
+    return this.getUserToken().pipe(
+      take(1),
+      mergeMap((token) => {
+        if (this.keycloakService.isLoggedIn()) {
           if (token) {
             request = request.clone({
               setHeaders: {
@@ -24,9 +24,9 @@ export class KeycloakInterceptorService implements HttpInterceptor {
             });
           }
           return next.handle(request);
-        }));
-    }
-    return next.handle(request);
+        }
+        return next.handle(request);
+      }));
   }
 
   getUserToken() {
@@ -34,4 +34,22 @@ export class KeycloakInterceptorService implements HttpInterceptor {
     const tokenObservable: Observable<string> = from(tokenPromise);
     return tokenObservable;
   }
+
+  // }    if (this.keycloakService.isLoggedIn()) {
+  //     return this.getUserToken().pipe(
+  //       take(1),
+  //       mergeMap((token) => {
+  //         if (token) {
+  //           request = request.clone({
+  //             setHeaders: {
+  //               Authorization: `Bearer ${token}`
+  //             }
+  //           });
+  //         }
+  //         return next.handle(request);
+  //       }));
+  //   }
+  //   return next.handle(request);
+
+
 }

@@ -6,7 +6,6 @@ import {environment} from '../../../environments/environment';
 export class KeycloakService {
 
   static auth: any = {};
-
   constructor() {
   }
 
